@@ -1,0 +1,16 @@
+
+ Performance counter stats for 'python3 activematter_opt.py':
+
+     8 641 124 053      cycles                                                                  (84,47%)
+     8 534 726 377      instructions                     #    0,99  insn per cycle              (82,43%)
+       459 092 002      cache-references                                                        (82,56%)
+        30 015 508      cache-misses                     #    6,54% of all cache refs           (82,48%)
+     1 544 216 880      branches                                                                (83,52%)
+       150 092 331      branch-misses                    #    9,72% of all branches             (84,55%)
+
+       0,614472555 seconds time elapsed
+
+       0,914793000 seconds user
+       1,611971000 seconds sys
+
+

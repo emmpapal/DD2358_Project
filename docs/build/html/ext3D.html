@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problem extension to the 3D space &mdash; HPC-Project 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6fefd858"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Computation and memory system performance after optimizations" href="optCompSysPerf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            HPC-Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="contents.html">Active Matter Simulation code</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="compSysPerf.html">Computation and memory system performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optOne.html">First Optimization Technique: Vectorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optTwo.html">Second Optimization Technique: GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optCompSysPerf.html">Computation and memory system performance after optimizations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Problem extension to the 3D space</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HPC-Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="contents.html">Active Matter Simulation code</a></li>
+      <li class="breadcrumb-item active">Problem extension to the 3D space</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ext3D.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="problem-extension-to-the-3d-space">
+<h1>Problem extension to the 3D space<a class="headerlink" href="#problem-extension-to-the-3d-space" title="Link to this heading"></a></h1>
+<p>Following the analysis of swarming in a 2D space, we might be interested in exploring a more realistic scenario, a 3D space. Here is a frame of the simulation:</p>
+<img alt="_static/realtime_plot.gif" class="align-center" src="_static/realtime_plot.gif" />
+<p>In three dimensions the computation gets more complicated as we have to introduce a second angle to define any points. In a spherical coordinate system we will have a polar angle theta along with an azimuthal angle phi therefore double calculations will be worked out. Beside introducing a new angle, the code conversion from 2 to 3 dimensions is then quite straightforward. Just like before, even if treated separately, the average angles are obtained by summing all the neighboring vectors’ polar and azimuthal angles respectively, and then by applying Numpy’s arctan2 to return them in the correct quadrant. The scratch code without optimization looks as follows:</p>
+<figure class="align-center" id="fig-code-3d-no-opt">
+<a class="reference internal image-reference" href="_static/3D_no_opt.png"><img alt="Code snippet to be optimized in 3D space" src="_static/3D_no_opt.png" style="width: 50%;" /></a>
+</figure>
+<p><strong>Figure 9</strong>: Code snippet to be optimized in 3D space.</p>
+<p>Just like before, the code can be enhanced with the target of lessening the execution time. The same optimization techniques as before have been used hence vectorization and PyTorch GPU:</p>
+<figure class="align-center" id="fig-3d-vectorization">
+<a class="reference internal image-reference" href="_static/3D_vectorization.png"><img alt="Vectorization code in 3D space" src="_static/3D_vectorization.png" style="width: 45%;" /></a>
+</figure>
+<figure class="align-center" id="fig-3d-gpu">
+<a class="reference internal image-reference" href="_static/3D_GPU.png"><img alt="PyTorch GPU code in 3D space" src="_static/3D_GPU.png" style="width: 45%;" /></a>
+</figure>
+<p><strong>Figure 10</strong>: Vectorization and PyTorch GPU codes.</p>
+<p>The vectorized optimization exploits Numpy’s broadcasting ability to perform operations on arrays of different shapes. This allows to unroll the loop and perform the relative difference among vector pairs simultaneously to all elements. Likewise is the PyTorch version which basically executes the same operations, on tensors here, yet with the advantage to be run on GPUs.
+Below are shown the simulation results for default values of 500 birds and 200 time steps:</p>
+<figure class="align-center" id="fig-exec-time-comparison-plot">
+<a class="reference internal image-reference" href="_static/exec_time_comparison_plot_3d.png"><img alt="Execution time comparison plot in 3D" src="_static/exec_time_comparison_plot_3d.png" style="width: 70%;" /></a>
+</figure>
+<figure class="align-center" id="fig-exec-time-average-stddev">
+<a class="reference internal image-reference" href="_static/exec_time_average_stddev_3d.png"><img alt="Execution time average and standard deviation in 3D" src="_static/exec_time_average_stddev_3d.png" style="width: 70%;" /></a>
+</figure>
+<p><strong>Figure 11</strong>: Execution time of active matter in 3D for 50 iterations using optimization techniques.</p>
+<figure class="align-center" id="fig-perf-init">
+<a class="reference internal image-reference" href="_static/perf_init_3d.png"><img alt="Perf tools on native code" src="_static/perf_init_3d.png" style="width: 90%;" /></a>
+</figure>
+<p><strong>Figure 12</strong>: Perf tools on native code.</p>
+<figure class="align-center" id="fig-perf-vectorized">
+<a class="reference internal image-reference" href="_static/perf_vectorized_3d.png"><img alt="Perf tools on vectorized code" src="_static/perf_vectorized_3d.png" style="width: 90%;" /></a>
+</figure>
+<p><strong>Figure 13</strong>: Perf tools on vectorized code.</p>
+<p>Above the perf tools have been used. Beside the overall cycles needed to execute the whole computation, it is clear how better cache utilization is when exploiting Numpy’s libraries. In the vectorized version the number of cache references increases considerably together with a drop of cache misses. Along with that, also the number of taken branches falls.</p>
+<p>To wrap up, let’s now compare the 2D and 3D results:</p>
+<figure class="align-center" id="fig-2d-vs-3d">
+<a class="reference internal image-reference" href="_static/2D_vs_3D.png"><img alt="Runtime comparison between 2D and 3D versions" src="_static/2D_vs_3D.png" style="width: 80%;" /></a>
+</figure>
+<p><strong>Figure 14</strong>: Runtime comparison between 2D and 3D versions.</p>
+<p>As already stated, the 3-dimensions problem requires double calculations and in the native code this stands up in an almost doubled execution time. The optimizations allow to reach remarkable results for both the variants, no matter the size of the problem, in particular when looking at the two antipodes version, the initial and the GPU ones. We might then conclude that these techniques do provide outstanding ways of improving a Python code performance.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optCompSysPerf.html" class="btn btn-neutral float-left" title="Computation and memory system performance after optimizations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Davide Finazzi, Emmanouil Papaloukas, Georgios Giachnakis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

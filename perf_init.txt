@@ -1,0 +1,16 @@
+
+ Performance counter stats for 'python3 activematter.py':
+
+    14 281 070 748      cycles                                                                  (83,65%)
+    19 361 879 130      instructions                     #    1,36  insn per cycle              (82,73%)
+     1 310 129 959      cache-references                                                        (82,72%)
+        63 325 568      cache-misses                     #    4,83% of all cache refs           (82,74%)
+     3 910 514 427      branches                                                                (83,96%)
+       166 482 118      branch-misses                    #    4,26% of all branches             (84,21%)
+
+       1,782009259 seconds time elapsed
+
+       2,087465000 seconds user
+       1,709733000 seconds sys
+
+
